@@ -2,6 +2,8 @@ import logging
 from backend import bot
 from tabulate import tabulate
 import sys
+import datetime
+import pandas as pd
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -54,6 +56,11 @@ class LugiaScraper:
                 all_articles.extend(articles)
         if self.verbose:
             print(tabulate(all_articles, headers="keys", tablefmt="pretty"))
+        else:
+            logging.info(f"Total articles found: {len(all_articles)}")
+        self.articles = all_articles
+        if self.export_dir:
+            self.export_to_xlsx()
 
     def get_ids_from_file(self):
         with open(self.file) as f:
@@ -64,3 +71,11 @@ class LugiaScraper:
     def quit(self):
         self.bot.quit()
         logging.info("Bot quit successfully.")
+    
+    def export_to_xlsx(self):
+        filename = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + ".xlsx"
+        logging.info(f"Exporting data to {filename}")
+        df = pd.DataFrame(self.articles)
+        df.to_excel(self.export_dir + filename, index=False)
+
+        
