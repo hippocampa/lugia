@@ -48,9 +48,24 @@ Welcome to **Lugia**, your new favorite companion for diving into the depths of 
 
 ## Usage
 Run the scraper with a specific Google Scholar ID and date range:
-    ```bash
-    python lugia.py --id <id> --start <start-year> --end <end-year>
-    ```
+
+```bash
+Usage: lugia.py [OPTIONS]
+
+  Lugia: Scraping Author's Publication Data from Google Scholar
+
+Options:
+  --id TEXT          Scrape data based on Google Scholar ID
+  --file TEXT        Scrape data based on a list of Google Scholar ID from
+                     .txt File
+  --start INTEGER    Scrape year start
+  --end INTEGER      Scrape year end
+  --verbose          Will print verbose messages.
+  --export-dir TEXT  Export directory
+  --count            Only count the number of articles
+  --headless         Run the scraper in headless mode
+  --help             Show this message and exit.
+```
 
 ## Output
 Right now, lugia is only capable of printing all the articles in a tabular form from your terminal. Improvements are coming soon!
