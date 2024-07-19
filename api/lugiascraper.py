@@ -77,5 +77,6 @@ class LugiaScraper:
         logging.info(f"Exporting data to {filename}")
         df = pd.DataFrame(self.articles)
         df.to_excel(self.export_dir + filename, index=False)
+        logging.info("Export successful.")
 
         

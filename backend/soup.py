@@ -6,7 +6,14 @@ logging.basicConfig(level=logging.INFO)
 
 def filter_by_year(page, start, end):
     soup = BeautifulSoup(page, "html.parser")
-    articles = soup.find_all("tr", {"class": "gsc_a_tr"})
+    try:
+        articles = soup.find_all("tr", {"class": "gsc_a_tr"})
+    except Exception as e:
+        logging.error(f"An error occurred while filtering articles by year: {e}")
+        logging.info("Returning an empty list.")
+        return []
+
+
     
     if not articles:  # Check if the articles list is empty
         logging.info("No articles found.")
@@ -15,7 +22,12 @@ def filter_by_year(page, start, end):
     filtered_articles = []
 
     for article in articles:
-        year_text = article.find("td", {"class": "gsc_a_y"}).text
+        try:
+            year_text = article.find("td", {"class": "gsc_a_y"}).text
+        except Exception as e:
+            logging.error(f"An error occurred while extracting the year of an article: {e}")
+            year_text = -1
+            continue
         if not year_text:
             continue
         year = int(year_text)
